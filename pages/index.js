@@ -1,10 +1,14 @@
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 import db from '../db.json';
-import Widget from '../src/components/Widget'
-import QuizLogo from '../src/components/QuizLogo'
-import QuizBackground from '../src/components/QuizBackground'
-import Footer from '../src/components/Footer'
-import GitHubCorner from '../src/components/GitHubCorner'
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import Widget from '../src/components/Widget';
+import QuizLogo from '../src/components/QuizLogo';
+import QuizBackground from '../src/components/QuizBackground';
+import Footer from '../src/components/Footer';
+import GitHubCorner from '../src/components/GitHubCorner';
 
 // const BackgroundImage = styled.div`
 //   background-image: url(${db.bg});
@@ -25,8 +29,14 @@ export const QuizContainer = styled.div`
 `;
 
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = React.useState('')
+
   return (
     <QuizBackground backgroundImage={db.bg}>
+      <Head>
+        <title>AluraQuiz - Modelo Base</title>
+        </Head>      
       <QuizContainer>
         <QuizLogo />
         <Widget>
@@ -37,6 +47,26 @@ export default function Home() {
             <Widget.Paragraph color="yellow">
               {db.description}
             </Widget.Paragraph>
+            <form onSubmit={function (infosDoEvento) {
+              infosDoEvento.preventDefault();
+              const router = useRouter();
+              router.push(`/quiz?name=${name}`);
+              console.log('Fazendo uma submissão por meio do react');
+            }}
+            >
+              <input
+                onChange={function (infosDoEvento) {
+                  console.log(infosDoEvento.target.value)
+                  name = infosDoEvento.target.value;
+                  //State
+                }}
+                placeholder="Diz aí o seu nome" />
+              <button type="submit" disabled={name.length === 0}>
+                Jogar 
+                [Nome]
+              </button>
+            </form>
+
           </Widget.Content>
         </Widget>
 
