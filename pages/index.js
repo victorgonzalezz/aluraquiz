@@ -9,6 +9,8 @@ import QuizLogo from '../src/components/QuizLogo';
 import QuizBackground from '../src/components/QuizBackground';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
+import Input from '../src/components/Input';
+import Button from '../src/components/Button';
 
 // const BackgroundImage = styled.div`
 //   background-image: url(${db.bg});
@@ -36,7 +38,7 @@ export default function Home() {
     <QuizBackground backgroundImage={db.bg}>
       <Head>
         <title>AluraQuiz - Modelo Base</title>
-        </Head>      
+      </Head>
       <QuizContainer>
         <QuizLogo />
         <Widget>
@@ -47,6 +49,7 @@ export default function Home() {
             <Widget.Paragraph color="yellow">
               {db.description}
             </Widget.Paragraph>
+
             <form onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
               const router = useRouter();
@@ -54,17 +57,18 @@ export default function Home() {
               console.log('Fazendo uma submissão por meio do react');
             }}
             >
-              <input
-                onChange={function (infosDoEvento) {
-                  console.log(infosDoEvento.target.value)
-                  name = infosDoEvento.target.value;
-                  //State
-                }}
-                placeholder="Diz aí o seu nome" />
-              <button type="submit" disabled={name.length === 0}>
-                Jogar 
-                [Nome]
-              </button>
+              <Input
+              name="nomeDoUsuario"
+                onChange={(infosDoEvento) => setName(infosDoEvento.target.value)}
+        
+                placeholder="Diz aí o seu nome"
+                value={name}
+                />
+                
+                 
+              <Button type="submit" disabled={name.length === 0}>
+                {`Vamos Jogar ${name}!`}
+              </Button>
             </form>
 
           </Widget.Content>
